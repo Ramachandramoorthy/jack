@@ -1,0 +1,365 @@
+
+
+Linux:
+
+1)Here is an easy one. How do you copy, move and delete files and folders?
+Provide an example for each case: Copy file. Copy folder. Move file. Move folder. And so on.
+
+copy file:
+ameex@ameex:~$ cd ~
+ameex@ameex:~$ cp new.txt n1.txt
+copy folder:
+ameex@ameex:~$ cp -r /home/ameex/Desktop/nw Documents
+move file
+ameex@ameex:~$ mv new.txt ~/Desktop
+move folder:
+ameex@ameex:~/Documents$ mv nw ~/desktop
+delete file:
+ameex@ameex:~/Desktop$ rm new.txt
+delete folder:
+ameex@ameex:~$ rmdir RECOVERED_FILES
+
+2)What are the "modes" of a file / folder? How do you manipulate the modes of files and folders? How would you change the mode of all the files in a folder in one shot?
+Mode	Name	Description
+r	read	permitted to read the contents of file or directory (view files and sub-directories in that directory)
+w	write	permitted to write to the file or in to the directory (create files and sub-directories in that directory)
+x	execute	permitted to execute the file as a program/script or enter into that directory
+X	special execute	applies execute permissions to directories regardless of their current permissions and applies execute permissions to a file which already has at least 1 execute permission bit already set (either user, group or other).
+
+Action	Command	Format	Details
+Copy a file	cp	cp filename destination	           Copies the file filename to the location destination.
+List Directory 
+Contents	ls	ls	                           The ls command lists files in the current working directory.
+Move a file	mv	mv which_file destination	   To move a file from one directory to another, use mv.
+Rename a file	mv	mv oldname newname	           The use of the mv command changes the name of the file from oldname to newname.
+ameex@ameex:~$ ls -l n1.txt
+-rw-r--r-- 1 ameex ameex 9082 Sep 20 10:46 n1.txt
+ameex@ameex:~$ chmod 777 n1.txt
+ameex@ameex:~$ ls -l n1.txt
+-rwxrwxrwx 1 ameex ameex 9082 Sep 20 10:46 n1.txt
+
+3)How would you add users to the OS? How would you change your password? How would you change another user's password? How would you add groups to the OS? How would you add an existing user to the newly created group? What is the meaning of "primary" and "secondary" groups of a user?
+
+ameex@ameex:~$ sudo adduser reportbee
+[sudo] password for ameex: 
+Adding user `reportbee' ...
+Adding new group `reportbee' (1001) ...
+Adding new user `reportbee' (1001) with group `reportbee' ...
+Creating home directory `/home/reportbee' ...
+Copying files from `/etc/skel' ...
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+Changing the user information for reportbee
+Enter the new value, or press ENTER for the default
+	Full Name []: 
+	Room Number []: 
+	Work Phone []: 
+	Home Phone []: 
+	Other []: 
+Is the information correct? [Y/n] y
+ameex@ameex:~$ sudo -i
+root@ameex:~# passwd $haems
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+
+root@ameex:/# groupadd bees
+root@ameex:/# useradd -g bees anu
+root@ameex:/# passwd anu
+Enter new UNIX password: 
+Retype new UNIX password: 
+passwd: password updated successfully
+root@ameex:/# id anu
+uid=1002(anu) gid=1002(bees) groups=1002(bees)
+
+root@ameex:/# usermod -aG bees reportbee
+root@ameex:/# gpasswd --add reportbee bees
+Adding user reportbee to group bees
+
+Primary relationships are most common in small and traditional societies. A primary group is a group in which one exchanges implicit items, such as love, caring & concern.… Primary groups are composed of people who are emotionally closed, concerned for each other`s welfare and share a sense of "We". Secondary relationships are composed of people who have little personal knowledge of each other, do not share an amount of concern, have weak emotional ties and share a specific interest or activity
+
+4)How would you change the owner and group of a file / folder? How would you change the owner / group of all the files in a folder in one shot?
+
+chown user:group /path/to/file
+
+5)How would you check if a particular program is running on your computer? How would you forcefully kill a program?
+ameex@ameex:/$ ps ux|grep -i skype
+ameex     2332  2.4  4.6 595532 186164 ?       Sl   10:02   9:58 skype
+ameex     5811  0.0  0.0   4392   824 pts/2    S+   16:43   0:00 grep --color=auto -i skype
+ameex@ameex:/$ pkill -9 2332
+ameex@ameex:/$ kill -9 2332
+ameex@ameex:/$ ps ux|grep -i dump1.sql
+ameex     5891  0.0  0.0   4388   820 pts/2    S+   16:44   0:00 grep --color=au
+
+6)how would you check which program is taking up the maximum CPU cycles at the moment? How would you check which program is taking up the maximum RAM at the moment? How would you check how much RAM is free at the moment?
+
+root@ameex:~# ps -ef
+root@ameex:~# top
+root@ameex:~# free
+             total       used       free     shared    buffers     cached
+Mem:       4027588    2156388    1871200          0     154344    1124844
+-/+ buffers/cache:     877200    3150388
+Swap:      4082684          0    4082684
+
+7)How would you check if a particular network port number is currently being utilized and which program is utilizing it?
+   netstat -lnp 
+will list the pid and process name next to each listening port.
+
+8)Who / What is the root user? What is the "sudo" prefix used for? How do you run a series of commands which require root privileges without using the "sudo" prefix?
+root is the user name or account that by default has access to all commands and files on a Linux or other Unix-like operating system. It is also referred to as the root account, root user and the superuser.
+The only way to run a command that requires superuser access is to prefix it with a command called sudo.sudo stands for (you guessed it) “substitute user do”, and is appropriately pronounced like “pseudo” (a Greek prefix meaning, “Pretending to be something it is not”).
+
+9)How would you find the amount of used / free space in a partition of the disk?
+ameex@ameex:~$ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       455G  4.7G  427G   2% /
+udev            2.0G  4.0K  2.0G   1% /dev
+tmpfs           394M  820K  393M   1% /run
+none            5.0M     0  5.0M   0% /run/lock
+none            2.0G   24M  1.9G   2% /run/shm
+
+10)How would you find the size occupied by a folder and the individual sizes of the items within the folder in one command?
+ameex@ameex:~$ ls -sh Documents
+total 16K
+8.0K TEST  8.0K TEST~
+
+11)What are environment variables? What is the PATH environment variable used for? How would you change it? In which file is it usually set?
+i)An environment variable is a named object that contains data used by one or more applications. In simple terms, it is a variable with a name and a value.
+ii)PATH
+eg:/usr/sbin:/usr/bin:/sbin:/bin
+When you type a command to run, the system looks for it in the directories specified by PATH in the order specified
+iii) 5steps
+Find the current path by typing "echo $PATH" at the bash shell prompt.
+Temporarily add the :/sbin and :/usr/sbin paths to the current path list by typing the following command at the bash shell prompt:
+uzair@linux:~$ export PATH=$PATH:/sbin/:/usr/sbin/
+Echo the contents of PATH to confirm the changes are reflected in the variable.
+uzair@linux:~$ echo $PATH/home/uzair/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games
+Remember, the above is only temporary and will be lost at reboot.
+Test application program operation with the temporary path to assure the all works well.
+Permanently change the path setting by adding the same line to your ~/.bashrc 
+fileexport PATH=$PATH:/usr/local/go/bin
+
+12)How do you install software packages in Ubuntu / Linux Mint (or any Debian based Linux distribution)? How would you check if a particular software package is already installed?
+sudo apt-get update    (to get the latest version)
+sudo apt-get install software-package-name
+apt-cache policy git
+
+13)How would you check what IP address is being used by your computer? How would you change it on any Debian based Linux distro?
+
+ameex@ameex:/$ ifconfig eth0
+eth0      Link encap:Ethernet  HWaddr 94:de:80:f8:d1:6c  
+          inet addr:10.10.4.79  Bcast:10.10.4.255  Mask:255.255.255.0
+          inet6 addr: fe80::96de:80ff:fef8:d16c/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:434676 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:109752 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:95635207 (95.6 MB)  TX bytes:19178025 (19.1 MB)
+
+ameex@ameex:/$ ifconfig eth0 192.168.1.5 netmask 255.255.255.0 up
+eth0      Link encap:Ethernet  HWaddr 94:de:80:f8:d1:6c  
+          inet addr:192.168.1.5  Bcast:192.168.1.255  Mask:255.255.255.0
+          inet6 addr: fe80::96de:80ff:fef8:d16c/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:450920 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:113252 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:99170892 (99.1 MB)  TX bytes:19843171 (19.8 MB)
+
+14)There is a computer in a remote location. You are given the paths of two folders on this computer. In these two folders, you need to get the list of files and their sizes. How would you go about doing this?Remember, you have to describe how you connect to the remote computer.
+ameex@ameex:~$ ssh 10.10.4.81
+ameex@10.10.4.81's password: 
+Welcome to Ubuntu 14.04 LTS (GNU/Linux 3.13.0-35-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+
+Last login: Tue Sep 23 02:27:29 2014 from 10.10.4.80
+ameex@Ameex:~$ ls -sh Documents
+total 16K
+16K 1.txt
+ameex@Ameex:~$ ls -sh Documents Desktop
+Desktop:
+total 488K
+4.0K 7-12   4.0K JK      460K lcommands.pdf  4.0K Untitled Document
+4.0K 7-12~  4.0K Karthi  4.0K Links          4.0K Untitled Document~
+
+Documents:
+total 16K
+16K 1.txt
+
+15)There is a computer in a remote location. You are given the paths of two folders on this computer. You need to get those two folders to your own computer. How would you do it?
+ameex@Ameex:~/Documents$ scp ameex@10.10.4.81:~/Documents/1.txt /home/ameex/1.txt
+ameex@10.10.4.81's password: 
+1.txt                                         100%   15KB  15.0KB/s   00:00  
+
+16)You are connected to a remote computer using a secure shell (SSH) via the Internet. You are performing some critical task on it. You suddenly lose your Internet connection. What will happen to the critical task that was running on the remote computer? How do you make sure that nothing happens to any work you are performing on the remote computer, regardless of the status of your Internet connection?
+
+Screen is a virtual terminal which you can run from a "real" terminal (actually all terminals today are virtual). Screen will keep running even if your ssh session gets disconnected. Any programm which you start from screen will keep running in that screen session. When you reconnect the ssh session, you can reconnect to the screen session and everything will be as if nothing happened, other than the time which passed.The disadvantage of screen is the steep learning curve	. An alternative to screen is tmux.
+
+17)Here is something for you cryptography people. What is a public / private key-pair? What is it used for? How do you generate a key-pair? How do you use it with a secure shell?
+The Public Key is what its name suggests - Public. It is made available to everyone via a publicly accessible repository or directory. On the other hand, the Private Key must remain confidential to its respective owner.Because the key pair is mathematically related, whatever is encrypted with a Public Key may only be decrypted by its corresponding Private Key and vice versa.
+The public key is used to encrypt plaintext or to verify a digital signature; whereas the private key is used to decrypt ciphertext or to create a digital signature.
+ssh-keygen
+
+the key file is generated in .ssh folder in our home directory.
+Copy the public key file to remote machine's .ssh directory
+then again connect ssh
+
+Git:
+
+1)How do you create a new branch and switch to it in one go? How do you create a new branch but not switch to it immediately?
+
+git checkout -b <new_branch>
+git checkout <branch_name>
+
+2)How do you view the complete Git repository (commits, messages, log, history) visually?
+
+ameex@ameex:~/samplegit$ git log
+commit 4ffc336a479dbf1b46c714e51898d7121eb91f8b
+Author: haems <ameex@ameex.(none)>
+Date:   Mon Sep 22 12:03:21 2014 +0530
+
+    1st new branch file
+
+commit 3ce7630348d2d20b86cb50e76140bc9a446df77e
+Author: haems <ameex@ameex.(none)>
+Date:   Mon Sep 22 11:31:51 2014 +0530
+
+    new file
+
+commit 8dbc4b9f9105b8b064e17a97ef20197e88c1ccc6
+Author: haems <ameex@ameex.(none)>
+Date:   Mon Sep 22 11:22:54 2014 +0530
+
+    new file
+ameex@ameex:~/samplegit$ git ls-tree --full-tree -r HEAD
+100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	s
+100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	ss1
+100644 blob e69de29bb2d1d6434b8b29ae775ad8c2e48c5391	ss2
+
+
+3)What is a "Fast-forward Merge"? How does it compare to a "Recursive Merge"?
+
+ameex@ameex:~/samplegit$ git merge s1
+Updating 3ce7630..4ffc336
+Fast-forward
+ 0 files changed
+ create mode 100644 s
+ameex@ameex:~/samplegit$ git log
+commit 4ffc336a479dbf1b46c714e51898d7121eb91f8b
+Author: haems <ameex@ameex.(none)>
+Date:   Mon Sep 22 12:03:21 2014 +0530
+
+    1st new branch file
+
+commit 3ce7630348d2d20b86cb50e76140bc9a446df77e
+Author: haems <ameex@ameex.(none)>
+Date:   Mon Sep 22 11:31:51 2014 +0530
+
+    new file
+
+commit 8dbc4b9f9105b8b064e17a97ef20197e88c1ccc6
+Author: haems <ameex@ameex.(none)>
+Date:   Mon Sep 22 11:22:54 2014 +0530
+
+    new file
+ameex@ameex:~/samplegit$ git log history
+fatal: ambiguous argument 'history': unknown revision or path not in the working tree.
+Use '--' to separate paths from revisions
+ameex@ameex:~/samplegit$ git status
+# On branch master
+nothing to commit (working directory clean)
+
+If Master has not diverged, instead of creating a new commit, git will just point master to the latest commit of the feature branch.This is a “fast forward.”A fast-forward merge can occur when there is a linear path from the current branch tip to the target branch. Instead of “actually” merging the branches, all Git has to do to integrate the histories is move (i.e., “fast forward”) the current branch tip up to the target branch tip. This effectively combines the histories, since all of the commits reachable from the target branch are now available through the current one.
+      However, a fast-forward merge is not possible if the branches have diverged. When there is not a linear path to the target branch, Git has no choice but to combine them via a 3-way merge. 3-way merges use a dedicated commit to tie together the two histories. The nomenclature comes from the fact that Git uses three commits to generate the merge commit: the two branch tips and their common ancestor.
+While you can use either of these merge strategies, many developers like to use fast-forward merges (facilitated through rebasing) for small features or bug fixes, while reserving 3-way merges for the integration of longer-running features. In the latter case, the resulting merge commit serves as a symbolic joining of the two branches.
+
+4)What is the difference between fetch and pull?
+
+Git Pull
+
+git pull will pull down from a remote whatever you ask (so, whatever trunk you’re asking for) and instantly merge it into the branch you’re in when you make the request. Pull is a high-level request that runs ‘fetch’ then a ‘merge’ by default, or a rebase with ‘–rebase’. You could do without it, it’s just a convenience.
+
+%> git checkout localBranch
+%> git pull origin master
+%> git branch
+master
+* localBranch
+The above will merge the remote “master” branch into the local “localBranch”.
+
+Git fetch
+
+Fetch is similar to pull, except it won’t do any merging.
+
+%> git checkout localBranch
+ %> git fetch origin remoteBranch
+%> git branch
+master
+* localBranch
+remoteBranch
+So, the fetch will have pulled down the remoteBranch and put it into a local branch called “remoteBranch”. creates a local copy of a remote branch which you shouldn’t manipulate directly; instead create a proper local branch and work on that. ‘git checkout’ has a confusing feature though. If you ‘checkout’ a local copy of a remote branch, it creates a local copy and sets up a merge to it by default.
+
+5)In your working copy, you have made lots of changes: Modifications to existing files and created new files. Now, you decide that you don't want any of these changes. How would you bring your working copy to a clean state again? The modifications should be removed and the new files should be removed.
+The answer is NOT to delete the whole branch. The answer is NOT to roll back every file manually. It is two git commands.
+  reset --hard
+  git clean -nd replace n with f to actually delete the file
+
+6)You realize that you don't want the last two commits you have made. How do you remove them?Assume that you have not pushed those two commits yet.
+
+git stash save "description of changes"
+git stash drop
+
+ameex@ameex:~/samplegit$ git stash drop
+Dropped refs/stash@{0} (71bd8cc1931cb747ff4c0eae21ac3039d3a5a642)
+
+
+7)In your last commit, you realize that you missed a file. How do you fix this without creating another commit?
+
+$ git commit --amend
+Git will present you with the previous commit message to edit if you like; then, it simply discards the previous commit and puts a new one in its place, with your corrections. You can add -C HEAD if you want to reuse the previous commit message as-is.
+
+8)In your last commit message, you realize that you made a spelling error. How do you fix this?
+git rebase -i origin/master will give you the opportunity to correct the commits you have beyond your upstream repository. Then you can       git push the result.
+
+9)You have been furiously developing over the last two days and have made a number of local commits. In the same branch that you are developing on, your co-developer has also made changes and has pushed it to the matching remote branch. How would you get those new commits to your local branch without creating an unnecessary "merge commit"?
+"Local commits" mean that you have not pushed the commits yet. If you get this wrong, you deserve a spanking.
+create the branch : git checkout -f -b my_branch master
+work
+add modified files to commit list : git-update-index $FILE
+commit : git commit
+diff : git diff master..my_branch
+
+10)You are developing an experimental feature in a separate local branch (separate from the main master branch). You have made a few commits in your branch. You decide that you want to now take your experimental feature to the master branch. But by that time, the master branch has moved forward because of your co-developers pushing to it. How do you proceed?
+
+Decide not to merge. The only clean-ups you need are to reset the index file to the HEAD commit to reverse 2. and to clean up working tree changes made by 2. and 3.; git-reset --hard can be used for this.
+• Resolve the conflicts. Git will mark the conflicts in the working tree. Edit the files into shape and git add them to the index. Use git commit to seal the deal.
+You can work through the conflict with a number of tools:
+• Use a mergetool. git mergetool to launch a graphical mergetool which will work you through the merge.
+• Look at the diffs. git diff will show a three-way diff, highlighting changes from both the HEAD and MERGE_HEAD versions.
+• Look at the diffs from each branch. git log --merge -p <path> will show diffs first for the HEAD version and then the MERGE_HEAD version.
+• Look at the originals. git show :1:filename shows the common ancestor, git show :2:filename shows the HEAD version, and git show :3:filename shows the MERGE_HEAD version.
+
+11)What is a remote? How do you add a new remote to an existing repository?
+Remote repositories are versions of your project that are hosted on the Internet or network somewhere. You can have several of them, each of which generally is either read-only or read/write for you. Collaborating with others involves managing these remote repositories and pushing and pulling data to and from them when you need to share work.
+To see which remote servers you have configured, you can run the git remote command.
+git remote add [shortname] [url]:
+
+12)You are developing a new feature in a separate local branch. After a few days, you have written a lot of new code and created a few commits. You decide that you want to share this new code with a co-developer. But the feature is not finished yet, so you cannot merge it with the master branch. How would you go about sharing your code? How would your co-developer get the code you share?
+
+git clone git@github.com:charlie/some-project.git
+
+git remote add charlie git@github.com:charlie/some-project.git
+git fetch Charlie
+git show charlie/bug123
+
+ou can easily share your awesome.repo with anyone on the local networking using git-daemon command by first cd-ing to it’s parent directory.
+$ cd /home/bud/repos
+$ git daemon --export-all --base-path=.
+The above will share all your git repos under the current directory as read-only for others in the network to fetch. Git daemon will run in the foreground by default and so once you’re done sharing you can just Ctrl+C it.
+13)
+
+
+
+
+
